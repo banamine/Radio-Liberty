@@ -15,43 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!volumeControl) return;
 
             if (audio.paused) {
-                const backupStreams = audio.getAttribute('data-backup-streams');
-                const streams = backupStreams ? JSON.parse(backupStreams) : [];
-                streams.unshift(audio.src); // Add the primary stream to the beginning of the array
+                const streamUrl = audio.src;
 
-                const tryNextStream = (index) => {
-                    if (index >= streams.length) {
-                        console.error("All streams failed to load.");
-                        alert("All streams failed to load. Check console for details.");
-                        return;
-                    }
-
-                    const streamUrl = streams[index];
-                    audio.src = streamUrl;
-
-                    if (streamUrl.includes('.m3u') || streamUrl.includes('.pls') || streamUrl.includes('.asx') || streamUrl.includes('.xspf') || streamUrl.includes('.qtl')) {
-                        if (Hls.isSupported()) {
-                            const hls = new Hls();
-                            hls.loadSource(streamUrl);
-                            hls.attachMedia(audio);
-                            hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                                audio.play()
-                                    .then(() => {
-                                        icon.setAttribute('name', 'pause-circle-fill');
-                                        button.textContent = 'Pause';
-                                    })
-                                    .catch(error => {
-                                        console.error(`Error playing stream ${streamUrl}:`, error);
-                                        tryNextStream(index + 1);
-                                    });
-                            });
-                            hls.on(Hls.Events.ERROR, (event, data) => {
-                                if (data.fatal) {
-                                    console.error(`Fatal error encountered with stream ${streamUrl}:`, data);
-                                    tryNextStream(index + 1);
-                                }
-                            });
-                        } else if (audio.canPlayType('application/vnd.apple.mpegurl') || audio.canPlayType('audio/x-mpegurl') || audio.canPlayType('audio/x-ms-wma') || audio.canPlayType('application/xspf+xml') || audio.canPlayType('video/quicktime')) {
+                if (streamUrl.includes('.m3u') || streamUrl.includes('.pls') || streamUrl.includes('.asx') || streamUrl.includes('.xspf') || streamUrl.includes('.qtl')) {
+                    if (Hls.isSupported()) {
+                        const hls = new Hls();
+                        hls.loadSource(streamUrl);
+                        hls.attachMedia(audio);
+                        hls.on(Hls.Events.MANIFEST_PARSED, () => {
                             audio.play()
                                 .then(() => {
                                     icon.setAttribute('name', 'pause-circle-fill');
@@ -59,13 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
                                 })
                                 .catch(error => {
                                     console.error(`Error playing stream ${streamUrl}:`, error);
-                                    tryNextStream(index + 1);
+                                    alert(`Error playing stream. Check console for details.`);
                                 });
-                        } else {
-                            console.error(`Stream format not supported for ${streamUrl}`);
-                            tryNextStream(index + 1);
-                        }
-                    } else {
+                        });
+                        hls.on(Hls.Events.ERROR, (event, data) => {
+                            if (data.fatal) {
+                                switch (data.type) {
+                                    case Hls.ErrorTypes.NETWORK_ERROR:
+                                        console.error(`Fatal network error encountered with stream ${streamUrl}:`, data);
+                                        hls.startLoad();
+                                        break;
+                                    case Hls.ErrorTypes.MEDIA_ERROR:
+                                        console.error(`Fatal media error encountered with stream ${streamUrl}:`, data);
+                                        hls.recoverMediaError();
+                                        break;
+                                    default:
+                                        console.error(`Fatal error encountered with stream ${streamUrl}:`, data);
+                                        alert(`Fatal error playing stream. Check console for details.`);
+                                        break;
+                                }
+                            }
+                        });
+                    } else if (audio.canPlayType('application/vnd.apple.mpegurl') ||
+                               audio.canPlayType('audio/x-mpegurl') ||
+                               audio.canPlayType('audio/x-ms-wma') ||
+                               audio.canPlayType('application/xspf+xml') ||
+                               audio.canPlayType('video/quicktime')) {
                         audio.play()
                             .then(() => {
                                 icon.setAttribute('name', 'pause-circle-fill');
@@ -73,12 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             })
                             .catch(error => {
                                 console.error(`Error playing stream ${streamUrl}:`, error);
-                                tryNextStream(index + 1);
+                                alert(`Error playing stream. Check console for details.`);
                             });
+                    } else {
+                        alert(`Stream format not supported for ${streamUrl}`);
                     }
-                };
-
-                tryNextStream(0);
+                } else {
+                    // Standard audio playback
+                    audio.play()
+                        .then(() => {
+                            icon.setAttribute('name', 'pause-circle-fill');
+                            button.textContent = 'Pause';
+                        })
+                        .catch(error => {
+                            console.error(`Error playing stream ${streamUrl}:`, error);
+                            alert(`Error playing stream. Check console for details.`);
+                        });
+                }
             } else {
                 audio.pause();
                 icon.setAttribute('name', 'play-circle-fill');
