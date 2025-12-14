@@ -1,1 +1,39 @@
-const buttons=document.getElementsByClassName("play-radio"),audios=document.getElementsByClassName("audio"),volumeControls=document.getElementsByClassName("volume-control");function pauseAllExcept(e){for(let t of audios)if(t!==e){t.pause();const e=Array.from(audios).indexOf(t);buttons[e].disabled||(buttons[e].innerHTML='<sl-icon id="icon" slot="prefix" name="play-circle-fill"></sl-icon> Play',buttons[e].setAttribute("variant","primary"),volumeControls[e].style.display="none")}}for(let e=0;e<buttons.length;e++){const t=buttons[e],l=audios[e],n=volumeControls[e],o=l.getAttribute("src");let s=null;t.addEventListener("click",(()=>{l.paused?(t.innerHTML='<sl-spinner style="--indicator-color: var(--sl-color-neutral-0); --track-color: var(--sl-color-neutral-300);"></sl-spinner>',pauseAllExcept(l),o.endsWith(".m3u8")?Hls.isSupported()&&!s?(s=new Hls,s.loadSource(o),s.attachMedia(l)):l.canPlayType("application/vnd.apple.mpegurl")&&l.src!==o&&(l.src=o):l.src!==o&&(l.src=o),l.play().then((()=>{t.innerHTML='<sl-icon id="icon" slot="prefix" name="stop-circle-fill"></sl-icon> Stop',t.setAttribute("variant","danger"),n.style.display="inline-block",l.volume=n.value/100})).catch((()=>{disableButton(t)})),n.addEventListener("input",(function(){l.volume=n.value/100}))):(l.pause(),t.innerHTML='<sl-icon id="icon" slot="prefix" name="play-circle-fill"></sl-icon> Play',t.setAttribute("variant","primary"),n.style.display="none")})),l.onerror=function(){disableButton(t)}}function disableButton(e){e.innerHTML='<sl-icon slot="prefix" name="slash-circle"></sl-icon> Inactive',e.setAttribute("variant","default"),e.disabled=!0}
+document.addEventListener('DOMContentLoaded', () => {
+    // Play/Pause Logic
+    document.querySelectorAll('.play-radio').forEach(button => {
+        button.addEventListener('click', () => {
+            const card = button.closest('.card-container');
+            const audio = card.querySelector('audio');
+            const icon = button.querySelector('sl-icon');
+            const volumeControl = card.querySelector('.volume-control');
+
+            if (audio.paused) {
+                if (audio.src.endsWith('.m3u') || audio.src.endsWith('.m3u8')) {
+                    // Use HLS.js for .m3u streams
+                    if (Hls.isSupported()) {
+                        const hls = new Hls();
+                        hls.loadSource(audio.src);
+                        hls.attachMedia(audio);
+                        hls.on(Hls.Events.MANIFEST_PARSED, () => audio.play());
+                    } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+                        audio.play();
+                    }
+                } else {
+                    audio.play();
+                }
+                icon.setAttribute('name', 'pause-circle-fill');
+                button.textContent = 'Pause';
+            } else {
+                audio.pause();
+                icon.setAttribute('name', 'play-circle-fill');
+                button.textContent = 'Play';
+            }
+
+            // Volume Control
+            volumeControl.addEventListener('sl-change', () => {
+                audio.volume = volumeControl.value / 100;
+            });
+            audio.volume = volumeControl.value / 100;
+        });
+    });
+});
