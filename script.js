@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 console.error("Error playing audio:", error);
                                 alert("Error playing stream. Check console for details.");
                             });
+                    } else {
+                        alert("HLS is not supported in your browser.");
                     }
                 } else {
                     // Standard audio playback
