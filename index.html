@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -32,20 +34,35 @@
         </nav>
     </header>
 
+    <div class="now-playing">
+        <div class="clock">
+            <span id="current-time">00:00:00</span>
+        </div>
+        <div class="now-playing-text">
+            Now Playing: <span id="now-playing-title">None</span>
+        </div>
+    </div>
+
     <main>
         <!-- No Agenda Live -->
-        <sl-card>
+        <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/placeholder.webp" alt="No Agenda Live Logo">
-                    <sl-button class="play-radio" variant="primary">
-                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
-                        Play
-                    </sl-button>
+                    <img class="radio-logo" src="assets/noagenda-logo.webp" alt="No Agenda Live Logo">
+                    <div class="controls">
+                        <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
+                            <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                            Play
+                        </sl-button>
+                        <sl-button class="stop-radio" variant="danger">
+                            <sl-icon slot="prefix" name="stop-fill"></sl-icon>
+                            Stop
+                        </sl-button>
+                    </div>
                 </div>
                 <div class="info">
                     <div class="header">
-                        <strong>No Agenda Live</strong>
+                        <strong class="glow">No Agenda Live</strong>
                         <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.noagendashow.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
                     </div>
                     The No Agenda Show is a free-flowing, irreverent podcast.
@@ -56,6 +73,7 @@
                     </div>
                     <div class="footer">
                         <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" preload="none"></audio>
+                        <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
                 </div>
@@ -63,18 +81,24 @@
         </sl-card>
 
         <!-- No Agenda Music -->
-        <sl-card>
+        <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/placeholder.webp" alt="No Agenda Music Logo">
-                    <sl-button class="play-radio" variant="primary">
-                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
-                        Play
-                    </sl-button>
+                    <img class="radio-logo" src="assets/noagenda-music-logo.webp" alt="No Agenda Music Logo">
+                    <div class="controls">
+                        <sl-button class="play-radio" variant="primary" data-title="No Agenda Music">
+                            <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                            Play
+                        </sl-button>
+                        <sl-button class="stop-radio" variant="danger">
+                            <sl-icon slot="prefix" name="stop-fill"></sl-icon>
+                            Stop
+                        </sl-button>
+                    </div>
                 </div>
                 <div class="info">
                     <div class="header">
-                        <strong>No Agenda Music</strong>
+                        <strong class="glow">No Agenda Music</strong>
                         <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.noagendashow.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
                     </div>
                     Music stream from the No Agenda Show.
@@ -85,6 +109,7 @@
                     </div>
                     <div class="footer">
                         <audio class="audio" src="https://listen.noagendastream.com/v4vmusic?type=.mp3" preload="none"></audio>
+                        <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
                 </div>
@@ -92,18 +117,24 @@
         </sl-card>
 
         <!-- Infowars Radio MP3 -->
-        <sl-card>
+        <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
-                    <sl-button class="play-radio" variant="primary">
-                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
-                        Play
-                    </sl-button>
+                    <img class="radio-logo" src="assets/infowars-logo.webp" alt="Infowars Radio Logo">
+                    <div class="controls">
+                        <sl-button class="play-radio" variant="primary" data-title="Infowars Radio">
+                            <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                            Play
+                        </sl-button>
+                        <sl-button class="stop-radio" variant="danger">
+                            <sl-icon slot="prefix" name="stop-fill"></sl-icon>
+                            Stop
+                        </sl-button>
+                    </div>
                 </div>
                 <div class="info">
                     <div class="header">
-                        <strong>Infowars Radio (MP3)</strong>
+                        <strong class="glow">Infowars Radio</strong>
                         <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
                     </div>
                     Infowars Radio: News, analysis, and commentary.
@@ -114,6 +145,7 @@
                     </div>
                     <div class="footer">
                         <audio class="audio" src="http://streams1.infowars.com/listen/infowars.mp3" preload="none"></audio>
+                        <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
                 </div>
@@ -127,8 +159,6 @@
     </footer>
     <!-- Shoelace JS for UI components -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
-    <!-- HLS.js for playing HLS streams -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <!-- Load the main script -->
     <script src="script.js"></script>
     <!-- Register service worker for offline functionality -->
