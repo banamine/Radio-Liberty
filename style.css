@@ -1,3 +1,45 @@
+/* Base styles for the radio cards and layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+header, footer {
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+sl-card {
+    --border-radius: 0.5rem;
+    --padding: 0;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 .radio-logo {
     width: 120px;
     height: 120px;
@@ -5,13 +47,21 @@
     border-radius: 8px;
     background: #2a2a2a;
 }
+
+.info {
+    width: 100%;
+    text-align: center;
+}
+
 .volume-control {
     width: 100%;
     margin-top: 0.5rem;
 }
+
+/* Responsive design for mobile */
 @media (max-width: 768px) {
-    .card-container {
-        flex-direction: column;
+    main {
+        grid-template-columns: 1fr;
     }
     .radio-logo {
         width: 100px;
