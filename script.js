@@ -43,19 +43,30 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentAudio && currentAudio !== audio) {
                 currentAudio.pause();
                 const currentButton = currentAudio.closest('.card-container').querySelector('.play-radio');
-                const currentIcon = currentButton.querySelector('sl-icon');
-                currentIcon.setAttribute('name', 'play-circle-fill');
-                currentButton.textContent = 'Play';
-                cancelAnimationFrame(animationId);
+                if (currentButton) {
+                    const currentIcon = currentButton.querySelector('sl-icon');
+                    if (currentIcon) {
+                        currentIcon.setAttribute('name', 'play-circle-fill');
+                        currentButton.textContent = 'Play';
+                    }
+                }
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
             }
 
             if (audio.paused) {
                 audio.play()
                     .then(() => {
-                        icon.setAttribute('name', 'pause-circle-fill');
-                        button.textContent = 'Pause';
-                        nowPlayingTitle.textContent = title;
+                        if (icon) {
+                            icon.setAttribute('name', 'pause-circle-fill');
+                            button.textContent = 'Pause';
+                        }
+                        if (nowPlayingTitle) {
+                            nowPlayingTitle.textContent = title;
+                        }
                         currentAudio = audio;
+                        currentVisualizer = visualizer;
 
                         // Setup audio visualizer
                         if (!audioContext) {
@@ -94,9 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
             } else {
                 audio.pause();
-                icon.setAttribute('name', 'play-circle-fill');
-                button.textContent = 'Play';
-                cancelAnimationFrame(animationId);
+                if (icon) {
+                    icon.setAttribute('name', 'play-circle-fill');
+                    button.textContent = 'Play';
+                }
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                }
             }
 
             // Volume Control
@@ -131,8 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.currentTime = 0;
             icon.setAttribute('name', 'play-circle-fill');
             playButton.textContent = 'Play';
-            nowPlayingTitle.textContent = 'None';
-            cancelAnimationFrame(animationId);
+            if (nowPlayingTitle) {
+                nowPlayingTitle.textContent = 'None';
+            }
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
         });
     });
 });
