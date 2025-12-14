@@ -6,23 +6,23 @@
     <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' https://cdn.jsdelivr.net;
-        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev;
-        media-src 'self' https: http: blob:;
-        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev https://banamine.github.io;
+        media-src 'self' https: http: blob: data:;
+        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
         connect-src 'self' https://cdn.jsdelivr.net http://streams1.infowars.com https://listen.noagendastream.com;
     ">
     <title>Liberty Radio - Independent Radio Directory</title>
-    <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="assets/No_Agenda_cover_placeholder.jpg" type="image/jpeg">
     <link rel="manifest" href="manifest.json">
     <!-- Shoelace CSS for UI components -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
     <!-- Flag icons for country badges -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="style.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -48,7 +48,7 @@
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/noagenda-logo.webp" alt="No Agenda Live Logo">
+                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Live Logo">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
@@ -72,7 +72,7 @@
                         <sl-badge variant="success">Talk</sl-badge>
                     </div>
                     <div class="footer">
-                        <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" preload="none"></audio>
+                        <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" preload="none" crossorigin="anonymous"></audio>
                         <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
@@ -84,7 +84,7 @@
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/noagenda-music-logo.webp" alt="No Agenda Music Logo">
+                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Music Logo">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="No Agenda Music">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
@@ -108,7 +108,7 @@
                         <sl-badge variant="success">Music</sl-badge>
                     </div>
                     <div class="footer">
-                        <audio class="audio" src="https://listen.noagendastream.com/v4vmusic?type=.mp3" preload="none"></audio>
+                        <audio class="audio" src="https://listen.noagendastream.com/v4vmusic?type=.mp3" preload="none" crossorigin="anonymous"></audio>
                         <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
@@ -120,7 +120,7 @@
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/infowars-logo.webp" alt="Infowars Radio Logo">
+                    <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars Radio Logo">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="Infowars Radio">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
@@ -144,7 +144,7 @@
                         <sl-badge variant="success">News</sl-badge>
                     </div>
                     <div class="footer">
-                        <audio class="audio" src="http://streams1.infowars.com/listen/infowars.mp3" preload="none"></audio>
+                        <audio class="audio" src="http://streams1.infowars.com/listen/infowars.mp3" preload="none" crossorigin="anonymous"></audio>
                         <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
                     </div>
