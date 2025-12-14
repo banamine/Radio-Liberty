@@ -1,21 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize audio playback for all radio cards
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioElements = {};
+
     document.querySelectorAll('.play-radio').forEach(button => {
         button.addEventListener('click', () => {
             const card = button.closest('.card-container');
-            const audio = card.querySelector('audio');
+            const audioElement = card.querySelector('audio');
             const icon = button.querySelector('sl-icon');
             const volumeControl = card.querySelector('.volume-control');
+            const audioSrc = audioElement.src;
 
-            if (audio.paused) {
-                if (audio.src.includes('.m3u')) {
-                    // Use HLS.js for .m3u streams
+            if (audioElement.paused) {
+                if (audioSrc.includes('.m3u')) {
                     if (Hls.isSupported()) {
-                        const hls = new Hls();
-                        hls.loadSource(audio.src);
-                        hls.attachMedia(audio);
+                        if (!audioElements[audioSrc]) {
+                            const hls = new Hls();
+                            hls.loadSource(audioSrc);
+                            const audio = new Audio();
+                            hls.attachMedia(audio);
+                            audioElements[audioSrc] = { hls: hls, audio: audio };
+                        }
+
+                        const audioObj = audioElements[audioSrc];
                         hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                            audio.play()
+                            const source = audioContext.createMediaElementSource(audioObj.audio);
+                            source.connect(audioContext.destination);
+                            audioObj.audio.play()
                                 .then(() => {
                                     icon.setAttribute('name', 'pause-circle-fill');
                                     button.textContent = 'Pause';
@@ -25,9 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     alert("Error playing stream. Check console for details.");
                                 });
                         });
-                    } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
-                        // Native HLS support (Safari)
-                        audio.play()
+                    } else if (audioElement.canPlayType('application/vnd.apple.mpegurl')) {
+                        audioElement.play()
                             .then(() => {
                                 icon.setAttribute('name', 'pause-circle-fill');
                                 button.textContent = 'Pause';
@@ -40,8 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert("HLS is not supported in your browser.");
                     }
                 } else {
-                    // Standard audio playback
-                    audio.play()
+                    if (!audioElements[audioSrc]) {
+                        const audio = new Audio(audioSrc);
+                        audioElements[audioSrc] = audio;
+                    }
+
+                    const audioObj = audioElements[audioSrc];
+                    const source = audioContext.createMediaElementSource(audioObj);
+                    source.connect(audioContext.destination);
+                    audioObj.play()
                         .then(() => {
                             icon.setAttribute('name', 'pause-circle-fill');
                             button.textContent = 'Pause';
@@ -52,16 +68,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                 }
             } else {
-                audio.pause();
+                if (audioElements[audioSrc]) {
+                    audioElements[audioSrc].pause();
+                } else {
+                    audioElement.pause();
+                }
                 icon.setAttribute('name', 'play-circle-fill');
                 button.textContent = 'Play';
             }
 
-            // Volume Control
             volumeControl.addEventListener('sl-change', () => {
-                audio.volume = volumeControl.value / 100;
+                if (audioElements[audioSrc]) {
+                    audioElements[audioSrc].volume = volumeControl.value / 100;
+                } else {
+                    audioElement.volume = volumeControl.value / 100;
+                }
             });
-            audio.volume = volumeControl.value / 100;
+
+            if (audioElements[audioSrc]) {
+                audioElements[audioSrc].volume = volumeControl.value / 100;
+            } else {
+                audioElement.volume = volumeControl.value / 100;
+            }
         });
     });
 });
