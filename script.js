@@ -56,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (audio.paused) {
+                // Resume the audio context if it's suspended
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+
                 audio.play()
                     .then(() => {
                         if (icon) {
@@ -72,6 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!audioContext) {
                             audioContext = new (window.AudioContext || window.webkitAudioContext)();
                         }
+
+                        if (audioContext.state === 'suspended') {
+                            audioContext.resume();
+                        }
+
                         analyser = audioContext.createAnalyser();
                         const source = audioContext.createMediaElementSource(audio);
                         source.connect(analyser);
@@ -154,4 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Handle user interaction to resume audio context
+    document.addEventListener('click', () => {
+        if (audioContext && audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+    }, { once: true });
 });
