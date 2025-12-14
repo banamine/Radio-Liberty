@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;">
     <title>Liberty Radio - Independent Radio Directory</title>
     <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml">
-    <!-- Shoelace CSS for UI components -->
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
-    <!-- Flag icons for country badges -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
-    <!-- Shoelace JS for UI components -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
-    <!-- HLS.js for playing HLS streams -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
     <header>
@@ -151,9 +147,7 @@
         <small>This website is <a href="#" target="_blank">open-source</a>.</small>
         <p>© 2025 <a href="#" target="_blank">Liberty Express</a></p>
     </footer>
-    <!-- Load the main script -->
     <script src="script.js" defer></script>
-    <!-- Register service worker for offline functionality -->
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("sw.js");
