@@ -3,9 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.play-radio').forEach(button => {
         button.addEventListener('click', () => {
             const card = button.closest('.card-container');
+            if (!card) return;
+
             const audio = card.querySelector('audio');
+            if (!audio) return;
+
             const icon = button.querySelector('sl-icon');
+            if (!icon) return;
+
             const volumeControl = card.querySelector('.volume-control');
+            if (!volumeControl) return;
 
             if (audio.paused) {
                 if (audio.src.includes('.m3u')) {
@@ -77,9 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Volume Control
             volumeControl.addEventListener('sl-change', () => {
-                audio.volume = volumeControl.value / 100;
+                if (audio) {
+                    audio.volume = volumeControl.value / 100;
+                }
             });
-            audio.volume = volumeControl.value / 100;
+
+            if (audio) {
+                audio.volume = volumeControl.value / 100;
+            }
         });
     });
 });
