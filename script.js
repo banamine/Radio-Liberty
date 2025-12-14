@@ -25,6 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
                                     alert("Error playing stream. Check console for details.");
                                 });
                         });
+                        hls.on(Hls.Events.ERROR, (event, data) => {
+                            if (data.fatal) {
+                                switch (data.type) {
+                                    case Hls.ErrorTypes.NETWORK_ERROR:
+                                        console.error("Fatal network error encountered, trying to recover");
+                                        hls.startLoad();
+                                        break;
+                                    case Hls.ErrorTypes.MEDIA_ERROR:
+                                        console.error("Fatal media error encountered, trying to recover");
+                                        hls.recoverMediaError();
+                                        break;
+                                    default:
+                                        console.error("Fatal error encountered, cannot recover");
+                                        alert("Fatal error playing stream. Check console for details.");
+                                        break;
+                                }
+                            }
+                        });
                     } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
                         // Native HLS support (Safari)
                         audio.play()
