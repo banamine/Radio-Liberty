@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
-    <!-- Updated CSP to allow necessary resources -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-        script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval';
-        img-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://streams1.infowars.com;
-        media-src 'self' https://listen.noagendastream.com http://streams1.infowars.com;
+        script-src 'self' https://cdn.jsdelivr.net;
+        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev;
+        media-src 'self' https: http:;
         style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
         connect-src 'self' https://cdn.jsdelivr.net;
     ">
@@ -22,10 +21,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
-    <!-- HLS.js for playing HLS streams -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
-    <!-- Shoelace JS for UI components -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
 </head>
 <body>
     <header>
@@ -138,8 +133,6 @@
                 <div class="info">
                     <div class="header">
                         <strong>Radio Station Name</strong>
-                        <!-- Add website link if available -->
-                        <!-- <sl-icon-button name="arrow-up-right" label="Visit Website" href="#" target="_blank" rel="noopener noreferrer"></sl-icon-button> -->
                     </div>
                     Description here.
                     <div class="badges">
@@ -160,12 +153,17 @@
         <small>This website is <a href="#" target="_blank">open-source</a>.</small>
         <p>© 2025 <a href="#" target="_blank">Liberty Express</a></p>
     </footer>
+    <!-- Shoelace JS for UI components -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
+    <!-- HLS.js for playing HLS streams -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <!-- Load the main script -->
+    <script src="script.js"></script>
+    <!-- Register service worker for offline functionality -->
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("sw.js");
         }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
