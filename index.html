@@ -1,28 +1,288 @@
-<!-- Infowars Radio -->
-<sl-card>
-    <div class="card-container">
-        <div class="logo-container">
-            <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
-            <sl-button class="play-radio" variant="primary">
-                <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
-                Play
+<!DOCTYPE html>
+<html class="sl-theme-dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' https://cdn.jsdelivr.net;
+        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev;
+        media-src 'self' https: http: blob:;
+        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        connect-src 'self' https://cdn.jsdelivr.net http://streams1.infowars.com https://listen.noagendastream.com;
+    ">
+    <title>Liberty Radio - Independent Radio Directory</title>
+    <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.json">
+    <!-- Shoelace CSS for UI components -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
+    <!-- Flag icons for country badges -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <sl-button class="logo" variant="text" size="large" href="/">
+                <sl-icon slot="prefix" name="broadcast-pin" style="font-size: 2rem;"></sl-icon>
+                LIBERTY RADIO
             </sl-button>
-        </div>
-        <div class="info">
-            <div class="header">
-                <strong>Infowars Radio</strong>
-                <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Live Audio Stream Links</h2>
+
+        <!-- No Agenda Live -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="No Agenda Live Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>No Agenda Live</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.noagendashow.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    The No Agenda Show is a free-flowing, irreverent podcast.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">Talk</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
             </div>
-            Infowars Radio: News, analysis, and commentary.
-            <div class="badges">
-                <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
-                <sl-badge variant="success">English</sl-badge>
-                <sl-badge variant="success">News</sl-badge>
+        </sl-card>
+
+        <!-- No Agenda Music -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="No Agenda Music Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>No Agenda Music</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.noagendashow.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Music stream from the No Agenda Show.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">Music</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="https://listen.noagendastream.com/v4vmusic?type=.mp3" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
             </div>
-            <div class="footer">
-                <audio class="audio" src="http://streams1.infowars.com/listen.m3u?sid=7" preload="none" data-backup-streams='["http://streams1.infowars.com/listen.pls?sid=7", "http://streams1.infowars.com/listen.asx?sid=7", "http://streams1.infowars.com/listen.xspf?sid=7", "http://streams1.infowars.com/listen.qtl?sid=6"]'></audio>
-                <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+        </sl-card>
+
+        <!-- Infowars Radio MP3 -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (MP3)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen/infowars.mp3" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</sl-card>
+        </sl-card>
+
+        <!-- Infowars Radio M3U -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (M3U)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen.m3u?sid=7" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
+            </div>
+        </sl-card>
+
+        <!-- Infowars Radio PLS -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (PLS)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen.pls?sid=7" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
+            </div>
+        </sl-card>
+
+        <!-- Infowars Radio ASX -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (ASX)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen.asx?sid=7" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
+            </div>
+        </sl-card>
+
+        <!-- Infowars Radio XSPF -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (XSPF)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen.xspf?sid=7" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
+            </div>
+        </sl-card>
+
+        <!-- Infowars Radio QTL -->
+        <sl-card>
+            <div class="card-container">
+                <div class="logo-container">
+                    <img class="radio-logo" src="assets/placeholder.webp" alt="Infowars Radio Logo">
+                    <sl-button class="play-radio" variant="primary">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon>
+                        Play
+                    </sl-button>
+                </div>
+                <div class="info">
+                    <div class="header">
+                        <strong>Infowars Radio (QTL)</strong>
+                        <sl-icon-button name="arrow-up-right" label="Visit Website" href="https://www.infowars.com/" target="_blank" rel="noopener noreferrer"></sl-icon-button>
+                    </div>
+                    Infowars Radio: News, analysis, and commentary.
+                    <div class="badges">
+                        <sl-badge variant="success">USA<span class="fi fi-us fis"></span></sl-badge>
+                        <sl-badge variant="success">English</sl-badge>
+                        <sl-badge variant="success">News</sl-badge>
+                    </div>
+                    <div class="footer">
+                        <audio class="audio" src="http://streams1.infowars.com/listen.qtl?sid=6" preload="none"></audio>
+                        <sl-range class="volume-control" min="0" max="100" value="50" aria-label="volume-control"></sl-range>
+                    </div>
+                </div>
+            </div>
+        </sl-card>
+    </main>
+
+    <footer>
+        <small>This website is <a href="#" target="_blank">open-source</a>.</small>
+        <p>© 2025 <a href="#" target="_blank">Liberty Express</a></p>
+    </footer>
+    <!-- Shoelace JS for UI components -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
+    <!-- HLS.js for playing HLS streams -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Load the main script -->
+    <script src="script.js"></script>
+    <!-- Register service worker for offline functionality -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("sw.js");
+        }
+    </script>
+</body>
+</html>
