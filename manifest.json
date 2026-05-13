@@ -1,11 +1,11 @@
 {
   "name": "Liberty Radio",
-  "short_name": "LibertyRadio",
-  "description": "Liberty Radio - Open-source radio directory for independent streams.",
+  "short_name": "Liberty",
+  "description": "Independent Radio Stream Directory",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#1e88e5",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00ff41",
   "icons": [
     {
       "src": "assets/No_Agenda_cover_placeholder.jpg",
