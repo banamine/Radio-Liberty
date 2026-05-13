@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
+    
+    <!-- Restored Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' https://cdn.jsdelivr.net;
+        style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev https://banamine.github.io;
+        media-src 'self' https: http: blob: data:;
+        connect-src 'self' https://listen.noagendastream.com https://audio.alexjoneslive.com;
+    ">
+
     <title>Liberty Radio - Independent Radio Directory</title>
     
-    <!-- Shoelace & Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -31,12 +41,12 @@
         </div>
     </div>
 
-    <main>
+    <main id="radio-grid">
         <!-- No Agenda Live -->
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Live Logo">
+                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Live">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
@@ -68,7 +78,7 @@
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Music Logo">
+                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Music">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="No Agenda Music">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
@@ -96,11 +106,11 @@
             </div>
         </sl-card>
 
-        <!-- Infowars -->
+        <!-- Infowars - Fixed Tag Structure -->
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
-                    <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars Radio Logo">
+                    <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars Radio">
                     <div class="controls">
                         <sl-button class="play-radio" variant="primary" data-title="Infowars Radio">
                             <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
@@ -120,7 +130,6 @@
                         <sl-badge variant="success">News</sl-badge>
                     </div>
                     <div class="footer">
-                        <!-- FIXED SRC HERE -->
                         <audio class="audio" src="https://audio.alexjoneslive.com/alexjonesshow.aac" crossorigin="anonymous"></audio>
                         <canvas class="visualizer" width="300" height="100"></canvas>
                         <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
