@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let analyser;
     let dataArray;
     let animationId;
-    const sourceNodes = new Map(); // Cache sources to prevent crashes
+    const sourceNodes = new Map();
 
     // Clock Logic
     setInterval(() => {
@@ -35,35 +35,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < dataArray.length; i++) {
             const barHeight = dataArray[i] / 2;
-            // Matrix/Punk Green & Yellow palette
             ctx.fillStyle = `rgb(${barHeight + 100}, 255, 0)`; 
             ctx.fillRect(x, visualizer.height - barHeight, barWidth, barHeight);
             x += barWidth + 1;
         }
     }
 
+    // Function to reset all buttons and audio
+    function stopAllAudio() {
+        document.querySelectorAll('.audio').forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+        document.querySelectorAll('.play-radio').forEach(btn => {
+            btn.textContent = 'Play';
+            btn.variant = 'primary';
+            // Reset the icon manually if needed
+            const icon = btn.querySelector('sl-icon');
+            if (icon) icon.name = 'play-circle-fill';
+        });
+        cancelAnimationFrame(animationId);
+        // Clear all visualizers
+        document.querySelectorAll('.visualizer').forEach(v => {
+            const ctx = v.getContext('2d');
+            ctx.clearRect(0, 0, v.width, v.height);
+        });
+    }
+
+    // Play/Pause Button Logic
     document.querySelectorAll('.play-radio').forEach(button => {
         button.addEventListener('click', async () => {
             const card = button.closest('.card-container');
-            const audio = card.querySelector('audio');
+            const audio = card.querySelector('.audio');
             const visualizer = card.querySelector('.visualizer');
             const title = button.getAttribute('data-title');
 
             initAudioContext();
             if (audioContext.state === 'suspended') await audioContext.resume();
 
-            // Stop others
-            document.querySelectorAll('audio').forEach(a => {
-                if (a !== audio) {
-                    a.pause();
-                    const btn = a.closest('.card-container').querySelector('.play-radio');
-                    btn.textContent = 'Play';
-                    btn.variant = 'primary';
-                }
-            });
-
             if (audio.paused) {
-                // Connect source once
+                stopAllAudio(); // Stop others before playing new one
+
                 if (!sourceNodes.has(audio)) {
                     const source = audioContext.createMediaElementSource(audio);
                     source.connect(analyser);
@@ -74,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.textContent = 'Pause';
                     button.variant = 'warning';
                     nowPlayingTitle.textContent = title;
-                    cancelAnimationFrame(animationId);
                     draw(visualizer);
                 }).catch(e => console.error("Stream Blocked:", e));
             } else {
@@ -86,10 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Volume handling - real-time updates
+    // NEW: Stop Button Logic
+    document.querySelectorAll('.stop-radio').forEach(button => {
+        button.addEventListener('click', () => {
+            stopAllAudio();
+            nowPlayingTitle.textContent = "None";
+        });
+    });
+
+    // Volume Handling
     document.querySelectorAll('.volume-control').forEach(slider => {
         slider.addEventListener('sl-input', (e) => {
-            const audio = e.target.closest('.card-container').querySelector('audio');
+            const audio = e.target.closest('.card-container').querySelector('.audio');
             audio.volume = e.target.value / 100;
         });
     });
