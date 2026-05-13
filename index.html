@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Liberty Radio - Open-source radio directory for independent streams.">
     
-    <!-- Restored Security Policy -->
+    <!-- Expanded CSP to handle Shoelace Icons and External Fonts -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
         script-src 'self' https://cdn.jsdelivr.net;
         style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+        font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
         img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev https://banamine.github.io;
         media-src 'self' https: http: blob: data:;
-        connect-src 'self' https://listen.noagendastream.com https://audio.alexjoneslive.com;
+        connect-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://audio.alexjoneslive.com;
     ">
 
     <title>Liberty Radio - Independent Radio Directory</title>
@@ -106,7 +107,7 @@
             </div>
         </sl-card>
 
-        <!-- Infowars - Fixed Tag Structure -->
+        <!-- Infowars -->
         <sl-card class="radio-card">
             <div class="card-container">
                 <div class="logo-container">
@@ -120,26 +121,46 @@
                         </sl-button>
                     </div>
                 </div>
-                <div class="info">
-                    <div class="header">
-                        <strong class="glow">Infowars Radio</strong>
-                        <sl-icon-button name="arrow-up-right" href="https://thealexjonesstore.com/" target="_blank"></sl-icon-button>
-                    </div>
-                    <div class="badges">
-                        <sl-badge variant="success">USA <span class="fi fi-us"></span></sl-badge>
-                        <sl-badge variant="success">News</sl-badge>
-                    </div>
-                    <div class="footer">
-                        <audio class="audio" src=""https://stream.alexjones.media/alexjonesshow.mp3" crossorigin="anonymous"></audio>
-                        <canvas class="visualizer" width="300" height="100"></canvas>
-                        <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
-                    </div>
-                </div>
+                <!-- Infowars Section with Multiple Stream Selection -->
+<sl-card class="radio-card">
+    <div class="card-container">
+        <div class="logo-container">
+            <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars Radio">
+            <div class="controls">
+                <sl-button class="play-radio" variant="primary" data-title="Infowars Radio">
+                    <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
+                </sl-button>
+                <sl-button class="stop-radio" variant="danger">
+                    <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
+                </sl-button>
             </div>
-        </sl-card>
-    </main>
+        </div>
+        <div class="info">
+            <div class="header">
+                <strong class="glow">Infowars Network</strong>
+                <sl-icon-button name="arrow-up-right" href="https://thealexjonesstore.com/" target="_blank"></sl-icon-button>
+            </div>
+            
+            <!-- Stream Selector -->
+            <sl-select class="stream-selector" value="https://stream.alexjones.media/alexjonesshow.mp3" label="Select Feed" size="small" style="margin-bottom: 1rem;">
+                <sl-option value="https://stream.alexjones.media/alexjonesshow.mp3">Alex Jones Show (MP3)</sl-option>
+                <sl-option value="https://stream.alexjones.media/alexjonesshow">Alex Jones Show (AAC)</sl-option>
+                <sl-option value="https://audio.alexjoneslive.com/alexjonesshow.opus">Alex Jones Show (OPUS)</sl-option>
+                <sl-option value="https://stream.alexjones.media/warroom/">War Room with Harrison Smith</sl-option>
+                <sl-option value="https://stream.alexjones.media/stream/7/">Network Feed (All Live)</sl-option>
+            </sl-select>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+            <div class="badges">
+                <sl-badge variant="success">USA <span class="fi fi-us"></span></sl-badge>
+                <sl-badge variant="success">News</sl-badge>
+            </div>
+
+            <div class="footer">
+                <!-- The JS will update this src when the selector changes -->
+                <audio class="audio" src="https://stream.alexjones.media/alexjonesshow.mp3" crossorigin="anonymous"></audio>
+                <canvas class="visualizer" width="300" height="100"></canvas>
+                <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
+            </div>
+        </div>
+    </div>
+</sl-card>
