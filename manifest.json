@@ -2,7 +2,7 @@
   "name": "Liberty Radio",
   "short_name": "Liberty",
   "description": "Independent Radio Stream Directory",
-  "start_url": "/",
+  "start_url": "https://www.liberty-express.org/libertyradio.html",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#00ff41",
