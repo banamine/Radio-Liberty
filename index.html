@@ -1,88 +1,54 @@
-<!DOCTYPE html>
-<html class="sl-theme-dark" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Liberty Radio - Open-source radio directory.">
-    
-    <!-- Optimized CSP for Shoelace Rendering -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' https://cdn.jsdelivr.net;
-        style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
-        font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
-        img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev https://banamine.github.io;
-        media-src 'self' https: http: blob: data:;
-        connect-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://audio.alexjoneslive.com https://stream.alexjones.media;
-    ">
-
-    <title>Liberty Radio - Independent Radio Directory</title>
-    
-    <!-- Shoelace CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
-    <!-- Flags and Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <sl-button class="logo" variant="text" size="large" href="/">
-                <sl-icon slot="prefix" name="broadcast-pin"></sl-icon>
-                LIBERTY RADIO
-            </sl-button>
-        </nav>
-    </header>
-
-    <div class="now-playing">
-        <div class="clock">
-            <span id="current-time">00:00:00</span>
-        </div>
-        <div class="now-playing-text">
-            Now Playing: <span id="now-playing-title">None</span>
-        </div>
-    </div>
-
-    <main id="radio-grid">
-        <!-- Radio cards stay mostly the same, ensuring 'sl-button' tags are used -->
-        <sl-card class="radio-card">
-            <div class="card-container">
-                <div class="logo-container">
-                    <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda Live">
-                    <div class="controls">
-                        <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
-                            <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
-                        </sl-button>
-                        <sl-button class="stop-radio" variant="danger">
-                            <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
-                        </sl-button>
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="header">
-                        <strong class="glow">No Agenda Live</strong>
-                        <sl-icon-button name="arrow-up-right" href="https://www.noagendashow.com/" target="_blank"></sl-icon-button>
-                    </div>
-                    <div class="badges">
-                        <sl-badge variant="success">USA <span class="fi fi-us"></span></sl-badge>
-                        <sl-badge variant="success">Talk</sl-badge>
-                    </div>
-                    <div class="footer">
-                        <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" crossorigin="anonymous"></audio>
-                        <canvas class="visualizer" width="300" height="100"></canvas>
-                        <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
-                    </div>
+<main id="radio-grid">
+    <!-- Card 1: No Agenda -->
+    <sl-card class="radio-card">
+        <div class="card-container">
+            <div class="logo-container">
+                <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda">
+                <div class="controls">
+                    <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
+                    </sl-button>
+                    <sl-button class="stop-radio" variant="danger">
+                        <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
+                    </sl-button>
                 </div>
             </div>
-        </sl-card>
+            <div class="info">
+                <div class="header"><strong>No Agenda Live</strong></div>
+                <div class="footer">
+                    <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" crossorigin="anonymous"></audio>
+                    <canvas class="visualizer" width="300" height="100"></canvas>
+                    <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
+                </div>
+            </div>
+        </div>
+    </sl-card>
 
-        <!-- Repeat card structure for other stations... -->
-
-    </main>
-
-    <!-- Shoelace JS Autoloader -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace-autoloader.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Card 2: Infowars (Make sure this starts AFTER the first </sl-card>) -->
+    <sl-card class="radio-card">
+        <div class="card-container">
+            <div class="logo-container">
+                <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars">
+                <div class="controls">
+                    <sl-button class="play-radio" variant="primary" data-title="Infowars">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
+                    </sl-button>
+                    <sl-button class="stop-radio" variant="danger">
+                        <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
+                    </sl-button>
+                </div>
+            </div>
+            <div class="info">
+                <sl-select class="stream-selector" value="https://stream.alexjones.media/alexjonesshow.mp3" size="small">
+                    <sl-option value="https://stream.alexjones.media/alexjonesshow.mp3">Alex Jones (MP3)</sl-option>
+                    <sl-option value="https://stream.alexjones.media/warroom/">War Room</sl-option>
+                </sl-select>
+                <div class="footer">
+                    <audio class="audio" src="https://stream.alexjones.media/alexjonesshow.mp3" crossorigin="anonymous"></audio>
+                    <canvas class="visualizer" width="300" height="100"></canvas>
+                    <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
+                </div>
+            </div>
+        </div>
+    </sl-card>
+</main>
