@@ -1,3 +1,8 @@
+/**
+ * Radio Liberty Core Logic
+ * Handles Web Audio API, Visualizations, and Stream Controls
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     const nowPlayingTitle = document.getElementById('now-playing-title');
     const currentTimeElement = document.getElementById('current-time');
@@ -8,12 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationId;
     const sourceNodes = new Map();
 
-    // Clock Logic
+    // 1. Clock Logic
     setInterval(() => {
         const now = new Date();
         currentTimeElement.textContent = now.toTimeString().split(' ')[0];
     }, 1000);
 
+    // 2. Audio Context Initialization (User-gesture required)
     function initAudioContext() {
         if (!audioContext) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -24,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 3. Visualization Rendering
     function draw(visualizer) {
         animationId = requestAnimationFrame(() => draw(visualizer));
         analyser.getByteFrequencyData(dataArray);
@@ -41,40 +48,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to reset all buttons and audio
+    // 4. Unified Stop Function
     function stopAllAudio() {
+        cancelAnimationFrame(animationId);
         document.querySelectorAll('.audio').forEach(audio => {
             audio.pause();
-            audio.currentTime = 0;
+            audio.currentTime = 0; // Reset stream
         });
+
         document.querySelectorAll('.play-radio').forEach(btn => {
             btn.textContent = 'Play';
             btn.variant = 'primary';
-            // Reset the icon manually if needed
             const icon = btn.querySelector('sl-icon');
             if (icon) icon.name = 'play-circle-fill';
         });
-        cancelAnimationFrame(animationId);
-        // Clear all visualizers
+
         document.querySelectorAll('.visualizer').forEach(v => {
-            const ctx = v.getContext('2d');
-            ctx.clearRect(0, 0, v.width, v.height);
+            v.getContext('2d').clearRect(0, 0, v.width, v.height);
         });
     }
 
-    // Play/Pause Button Logic
-    document.querySelectorAll('.play-radio').forEach(button => {
-        button.addEventListener('click', async () => {
-            const card = button.closest('.card-container');
-            const audio = card.querySelector('.audio');
-            const visualizer = card.querySelector('.visualizer');
-            const title = button.getAttribute('data-title');
+    // 5. Alert System for Error Handling
+    function notifyError(title, message) {
+        const alert = Object.assign(document.createElement('sl-alert'), {
+            variant: 'danger',
+            closable: true,
+            duration: 8000,
+            innerHTML: `
+                <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+                <strong>${title} Offline:</strong> ${message}
+            `
+        });
+        document.body.append(alert);
+        alert.toast();
+    }
 
+    // 6. Play/Pause Listener
+    document.querySelectorAll('.play-radio').forEach(button => {
+        const card = button.closest('.card-container');
+        const audio = card.querySelector('.audio');
+        const visualizer = card.querySelector('.visualizer');
+        const title = button.getAttribute('data-title');
+
+        // Attach error listener once
+        audio.addEventListener('error', (e) => {
+            notifyError(title, "The stream could not be loaded or was interrupted.");
+            stopAllAudio();
+            nowPlayingTitle.textContent = "None";
+        });
+
+        button.addEventListener('click', async () => {
             initAudioContext();
             if (audioContext.state === 'suspended') await audioContext.resume();
 
             if (audio.paused) {
-                stopAllAudio(); // Stop others before playing new one
+                stopAllAudio(); // Clear previous station
 
                 if (!sourceNodes.has(audio)) {
                     const source = audioContext.createMediaElementSource(audio);
@@ -85,19 +113,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 audio.play().then(() => {
                     button.textContent = 'Pause';
                     button.variant = 'warning';
+                    const icon = button.querySelector('sl-icon');
+                    if (icon) icon.name = 'pause-circle-fill';
+                    
                     nowPlayingTitle.textContent = title;
                     draw(visualizer);
-                }).catch(e => console.error("Stream Blocked:", e));
+                }).catch(err => {
+                    notifyError(title, "Playback blocked. Please check your connection.");
+                });
             } else {
                 audio.pause();
                 button.textContent = 'Play';
                 button.variant = 'primary';
+                const icon = button.querySelector('sl-icon');
+                if (icon) icon.name = 'play-circle-fill';
                 cancelAnimationFrame(animationId);
             }
         });
     });
 
-    // NEW: Stop Button Logic
+    // 7. Stop Button Listener
     document.querySelectorAll('.stop-radio').forEach(button => {
         button.addEventListener('click', () => {
             stopAllAudio();
@@ -105,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Volume Handling
+    // 8. Volume Control (sl-input for Shoelace)
     document.querySelectorAll('.volume-control').forEach(slider => {
         slider.addEventListener('sl-input', (e) => {
             const audio = e.target.closest('.card-container').querySelector('.audio');
