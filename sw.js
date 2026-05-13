@@ -1,27 +1,15 @@
-const CACHE_NAME = 'liberty-radio-v2'; // Bump version
-const urlsToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/script.js',
-    '/manifest.json'
-];
+const CACHE_NAME = 'liberty-radio-v3';
+const assets = ['/', '/index.html', '/style.css', '/script.js', '/manifest.json'];
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-    );
+self.addEventListener('install', e => {
+    e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(assets)));
 });
 
-// Improved Fetch Strategy: Network first, fallback to cache
-self.addEventListener('fetch', event => {
-    // Skip cross-origin requests for the cache (like the radio streams)
-    if (!event.request.url.startsWith(self.location.origin)) {
-        event.respondWith(fetch(event.request));
-        return;
-    }
+self.addEventListener('fetch', e => {
+    // Only cache local assets, never the radio streams
+    if (!e.request.url.startsWith(self.location.origin)) return;
 
-    event.respondWith(
-        fetch(event.request).catch(() => caches.match(event.request))
+    e.respondWith(
+        fetch(e.request).catch(() => caches.match(e.request))
     );
 });
