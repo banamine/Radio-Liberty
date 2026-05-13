@@ -1,54 +1,72 @@
-<main id="radio-grid">
-    <!-- Card 1: No Agenda -->
-    <sl-card class="radio-card">
-        <div class="card-container">
-            <div class="logo-container">
-                <img class="radio-logo" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda">
+<!DOCTYPE html>
+<html class="sl-theme-dark" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev; media-src 'self' https: http:; connect-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://stream.alexjones.media;">
+    <title>Liberty Radio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header class="now-playing">
+        <div class="clock" id="current-time">00:00:00</div>
+        <div class="status">Now Playing: <span id="now-playing-title" class="glow">None</span></div>
+    </header>
+
+    <main id="radio-grid">
+        <sl-card class="radio-card">
+            <img slot="image" src="assets/No_Agenda_cover_placeholder.jpg" alt="No Agenda" class="radio-logo">
+            <div class="card-content">
+                <strong class="glow">No Agenda Live</strong>
                 <div class="controls">
-                    <sl-button class="play-radio" variant="primary" data-title="No Agenda Live">
+                    <sl-button class="play-radio" variant="primary" size="small" data-title="No Agenda Live">
                         <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
                     </sl-button>
-                    <sl-button class="stop-radio" variant="danger">
+                    <sl-button class="stop-radio" variant="danger" size="small">
                         <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
                     </sl-button>
                 </div>
-            </div>
-            <div class="info">
-                <div class="header"><strong>No Agenda Live</strong></div>
-                <div class="footer">
+                <div class="audio-engine">
                     <audio class="audio" src="https://listen.noagendastream.com/noagenda?type=.mp3" crossorigin="anonymous"></audio>
-                    <canvas class="visualizer" width="300" height="100"></canvas>
+                    <canvas class="visualizer"></canvas>
                     <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
                 </div>
             </div>
-        </div>
-    </sl-card>
+        </sl-card>
 
-    <!-- Card 2: Infowars (Make sure this starts AFTER the first </sl-card>) -->
-    <sl-card class="radio-card">
-        <div class="card-container">
-            <div class="logo-container">
-                <img class="radio-logo" src="assets/INFOWARS 1.jpg" alt="Infowars">
-                <div class="controls">
-                    <sl-button class="play-radio" variant="primary" data-title="Infowars">
-                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
-                    </sl-button>
-                    <sl-button class="stop-radio" variant="danger">
-                        <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
-                    </sl-button>
-                </div>
-            </div>
-            <div class="info">
+        <sl-card class="radio-card">
+            <img slot="image" src="assets/INFOWARS 1.jpg" alt="Infowars" class="radio-logo">
+            <div class="card-content">
                 <sl-select class="stream-selector" value="https://stream.alexjones.media/alexjonesshow.mp3" size="small">
-                    <sl-option value="https://stream.alexjones.media/alexjonesshow.mp3">Alex Jones (MP3)</sl-option>
+                    <sl-option value="https://stream.alexjones.media/alexjonesshow.mp3">Alex Jones Show</sl-option>
                     <sl-option value="https://stream.alexjones.media/warroom/">War Room</sl-option>
                 </sl-select>
-                <div class="footer">
+                <div class="controls">
+                    <sl-button class="play-radio" variant="primary" size="small" data-title="Infowars Network">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
+                    </sl-button>
+                    <sl-button class="stop-radio" variant="danger" size="small">
+                        <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
+                    </sl-button>
+                </div>
+                <div class="audio-engine">
                     <audio class="audio" src="https://stream.alexjones.media/alexjonesshow.mp3" crossorigin="anonymous"></audio>
-                    <canvas class="visualizer" width="300" height="100"></canvas>
+                    <canvas class="visualizer"></canvas>
                     <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
                 </div>
             </div>
-        </div>
-    </sl-card>
-</main>
+        </sl-card>
+    </main>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>
