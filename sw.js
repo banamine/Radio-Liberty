@@ -1,4 +1,4 @@
-const CACHE_NAME = 'liberty-radio-v3';
+const CACHE_NAME = 'liberty-radio-v4';
 const assets = ['/', '/libertyradio.html', '/style.css', '/script.js', '/manifest.json'];
  
 self.addEventListener('install', e => {
