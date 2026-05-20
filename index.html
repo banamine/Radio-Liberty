@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev; media-src 'self' https: http:; connect-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://stream.alexjones.media;">
+    <meta name="description" content="Independent radio stream directory featuring No Agenda, Infowars, and Blaze Media.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net https://flagicons.lipis.dev https://cdn.cookielaw.org; media-src 'self' https://listen.noagendastream.com https://stream.alexjones.media https://15123.live.streamtheworld.com; connect-src 'self' data: https://cdn.jsdelivr.net https://listen.noagendastream.com https://stream.alexjones.media https://15123.live.streamtheworld.com;">
     <title>Liberty Radio</title>
+    <link rel="icon" href="https://cdn.cookielaw.org/logos/08874449-6e54-49cf-b3a0-337a24296f63/c221a8f2-522c-4c4c-bf8e-e060089b7e57/e82b07ce-b61b-4a89-ad6f-b2a5c348aec6/Blaze_Media_Logo_-_2023.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <link rel="stylesheet" href="style.css">
@@ -59,23 +61,43 @@
                 </div>
             </div>
         </sl-card>
+
+        <sl-card class="radio-card">
+            <img slot="image" src="https://cdn.cookielaw.org/logos/08874449-6e54-49cf-b3a0-337a24296f63/c221a8f2-522c-4c4c-bf8e-e060089b7e57/e82b07ce-b61b-4a89-ad6f-b2a5c348aec6/Blaze_Media_Logo_-_2023.png" alt="Blaze Media" class="radio-logo blaze-logo">
+            <div class="card-content">
+                <strong class="glow">Blaze Media</strong>
+                <div class="controls">
+                    <sl-button class="play-radio" variant="primary" size="small" data-title="Blaze Media">
+                        <sl-icon slot="prefix" name="play-circle-fill"></sl-icon> Play
+                    </sl-button>
+                    <sl-button class="stop-radio" variant="danger" size="small">
+                        <sl-icon slot="prefix" name="stop-fill"></sl-icon> Stop
+                    </sl-button>
+                </div>
+                <div class="audio-engine">
+                    <audio class="audio" src="https://15123.live.streamtheworld.com/BLZE_1AAC_SC?pname=live_profile&companionAds=false&dist=iheart&terminalId=159&deviceName=web-mobile&aw_0_1st.playerid=iHeartRadioWebPlayer&listenerId=&clientType=web&profileId=12489876887&aw_0_1st.skey=12489876887&host=webapp.US&playedFrom=157&stationid=4874&territory=US" crossorigin="anonymous"></audio>
+                    <canvas class="visualizer"></canvas>
+                    <sl-range class="volume-control" min="0" max="100" value="50"></sl-range>
+                </div>
+            </div>
+        </sl-card>
     </main>
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/shoelace.js"></script>
     <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
         }
     </script>
-    <br>
-    <nav aria-label="Footer" style="font-size:14px;">
-  <ul style="list-style:none;margin:0;padding:0;display:flex;gap:12px;flex-wrap:wrap;">
-    <li><a href="/about.html" style="color:inherit;text-decoration:none;">About</a></li>
-    <li><a href="/contact.html" style="color:inherit;text-decoration:none;">Contact</a></li>
-    <li><a href="https://www.liberty-express.org/blaze-media.html" target="\_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Blaze Media</a></li>
-    <li><a href="/privacy.html" style="color:inherit;text-decoration:none;">Privacy</a></li>
-  </ul>
-</nav>
+
+    <nav aria-label="Footer" style="font-size:14px; margin-top: 1rem;">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;gap:12px;flex-wrap:wrap;">
+            <li><a href="/about.html" style="color:inherit;text-decoration:none;">About</a></li>
+            <li><a href="/contact.html" style="color:inherit;text-decoration:none;">Contact</a></li>
+            <li><a href="https://www.liberty-express.org/blaze-media.html" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Blaze Media</a></li>
+            <li><a href="/privacy.html" style="color:inherit;text-decoration:none;">Privacy</a></li>
+        </ul>
+    </nav>
 </body>
 </html>
