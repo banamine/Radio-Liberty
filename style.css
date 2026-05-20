@@ -72,3 +72,9 @@ sl-card::part(base) {
     text-shadow: 0 0 8px var(--matrix-green);
     color: var(--matrix-yellow);
 }
+
+.blaze-logo {
+    background-color: #1a1a1a;
+    object-fit: contain;
+    padding: 20px;
+}
