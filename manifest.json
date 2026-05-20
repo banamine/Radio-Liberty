@@ -1,16 +1,21 @@
-const CACHE_NAME = 'liberty-radio-v3';
-const assets = ['/', '/libertyradio.html', '/style.css', '/script.js', '/manifest.json'];
- 
-self.addEventListener('install', e => {
-    e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(assets)));
-});
- 
-self.addEventListener('fetch', e => {
-    // Only cache local assets, never the radio streams
-    if (!e.request.url.startsWith(self.location.origin)) return;
- 
-    e.respondWith(
-        fetch(e.request).catch(() => caches.match(e.request))
-    );
-});
- 
+{
+  "name": "Liberty Radio",
+  "short_name": "Liberty",
+  "description": "Independent Radio Stream Directory",
+  "start_url": "https://www.liberty-express.org/libertyradio.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00ff41",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
